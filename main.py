@@ -24,12 +24,14 @@ logging.basicConfig(level=logging.INFO)
 # Хэндлер на команду
 @dp.message_handler(commands="help")
 async def help_ans(message: types.Message):
-    await message.reply(F' /ping  введите ip адрес(только ip адрес)\n' \
+    await message.reply(F'/ping  введите ip адрес(только ip адрес)\n' \
                         f'/id выдаст ваш id \n' \
                         f'/tracert  введите ip  адрес\n' \
                         f'/pport введите адрес хоста и номер порта, через пробел, который хотете проверить\n'\
-	                f'/nslookup введите имя с указанием домена или IP-адрес\n'\
+	                    f'/nslookup введите имя с указанием домена или IP-адрес\n'\
                         f'/gen введите кол-во сиволов в пароле и чере пробел введите y если нужно с символами \n'\
+                        f'/whois введите ip  для получения информации по ip или домену,  если хотите получить \n'
+                        f' расширенную информацию после ip или домена через пробел введите i \n'\
                         f'/status введите имя сервера для просмотра статуса \n' \
                         f'/start работа с кнопками \n' \
                         f'/stop удалить кнопки \n' \
@@ -124,6 +126,26 @@ async def mess(message):
        await bot_token.send_message(message.chat.id, generate)
    else:
        await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
+
+
+@dp.message_handler(commands="whois")
+async def mess(message):
+    if read_config.watch_id(message.from_user.id) == True:
+        get_message_bot: object = message.text.strip()
+        mes = get_message_bot.split(" ")
+        if len(mes) == 3 :
+            who = port_ping.whois_ianna(mes[1], mes[2])
+        else:
+            who = port_ping.whois_ianna(mes[1])
+        print(mes)
+        if len(who) > 4096:
+            for x in range(0, len(who), 4096):
+                await bot_token.send_message(message.chat.id, who[x:x + 4096])
+        else:
+            await bot_token.send_message(message.chat.id, who,parse_mode='html')
+
+    else:
+        await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
 
 
 @dp.message_handler(commands="status")
