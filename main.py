@@ -133,17 +133,24 @@ async def mess(message):
     if read_config.watch_id(message.from_user.id) == True:
         get_message_bot: object = message.text.strip()
         mes = get_message_bot.split(" ")
-        if len(mes) == 3 :
-            who = port_ping.whois_ianna(mes[1], mes[2])
-        else:
-            who = port_ping.whois_ianna(mes[1])
-        print(mes)
-        if len(who) > 4096:
-            for x in range(0, len(who), 4096):
-                await bot_token.send_message(message.chat.id, who[x:x + 4096])
-        else:
-            await bot_token.send_message(message.chat.id, who,parse_mode='html')
-
+        try:
+            if len(mes) > 3:
+                raise IndexError('Вы ввели слишком много аргументов')
+            if len(mes) < 2:
+                raise IndexError('Вы ввели слишком мало аргументов')
+            if len(mes) == 3:
+                who = port_ping.whois_ianna(mes[1], mes[2])
+            else:
+                who = port_ping.whois_ianna(mes[1])
+            if len(who) > 4096:
+                for x in range(0, len(who), 4096):
+                    await bot_token.send_message(message.chat.id, who[x:x + 4096])
+            else:
+                await bot_token.send_message(message.chat.id, who, parse_mode='html')
+        except IndexError as err:
+            await bot_token.send_message(message.chat.id, "Не верно введены данные \n"
+                                                          "введите /whois ip \n"
+                                                          f"{err}", parse_mode='html')
     else:
         await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
 
