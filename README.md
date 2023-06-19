@@ -18,6 +18,7 @@
 -  nslookup
 -  generate password
 -  Check zabbix status
+-  whois
 
 ###             ВАЖНЫЕ УСЛОВИЯ            
 
@@ -28,3 +29,5 @@ mes[1] = f'{mes[1]}.local.domain'  - вметсто local.domain надо вве
 
     nslookup.py
 answer.nameservers=['name_server']  - вместо name_server необходимо ввести ip  адрес своего внутренего DNS сервера
+
+whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois
