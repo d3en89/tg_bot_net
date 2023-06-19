@@ -108,11 +108,12 @@ async def mess(message):
     if read_config.watch_id(message.from_user.id) == True:
         get_message_bot: object = message.text.strip()
         mes = get_message_bot.split(" ")
-        print(mes)
-        if not "." in mes[1]:
-            mes[1] = f'{mes[1]}.local.domain'
         look = nslook.look_up(mes[1])
-        await bot_token.send_message(message.chat.id, look, parse_mode='html')
+        if type(look) != list:
+            await bot_token.send_message(message.chat.id, look, parse_mode='html')
+        else:
+            for i in look:
+                await bot_token.send_message(message.chat.id, i, parse_mode='html')
     else:
         await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
 
