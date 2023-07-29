@@ -23,19 +23,21 @@
 
 ###             ВАЖНЫЕ УСЛОВИЯ            
 
-Формат заполнения conf.ini :
-    [dns]
-    server=ip_вашего_dns_сервера,ip_вашего_2-го_dns_сервера
-если необходимо указать несколько значений в настройках то используйте этот шаблон(но не везде это сработает)
-Для работы с ботом обязательно надо ввести свой id telegram  в файл conf.ini
-Для работы nslookup требуется вести dns сервер
+* Формат заполнения conf.ini :
+    - [dns]\
+       server=ip_вашего_dns_сервера,ip_вашего_2-го_dns_сервера
+>если необходимо указать несколько значений в настройках то используйте этот шаблон(но не везде это сработает)
+>Для работы с ботом обязательно надо ввести свой id telegram  в файл conf.ini
+>Для работы nslookup требуется вести dns сервер
 
-    nslookup.py
-name = f'{name}.local' -  Вместо local.domain надо ввести свой dns суфикс сети или внутренего домена
+* nslookup.py
+> name = f'{name}.local' -  Вместо local надо ввести свой dns суфикс сети или внутренего домена
 
-    port_ping.py
-whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois
+* port_ping.py
+> whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois
     
-    get_speedtest.py
-Для работы этого скрипта необходимо установить программу speedtest-cli 
-    -   sudo apt-get update && sudo apt-get upgrade && sudo apt-get install speedtest-cli
+* get_speedtest.py
+> Для работы этого скрипта необходимо установить программу speedtest-cli\
+    ```
+    sudo apt-get update && sudo apt-get upgrade && sudo apt-get install speedtest-cli
+    ```
