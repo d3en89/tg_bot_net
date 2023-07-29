@@ -20,7 +20,7 @@
 -  Check zabbix status
 -  whois
 -  speedtest
-
+ 
 ###             ВАЖНЫЕ УСЛОВИЯ            
 
 * Формат заполнения conf.ini :
