@@ -4,14 +4,11 @@ from pythonping import ping
 from aiogram import Bot, Dispatcher, executor, types
 import time
 import subprocess
-
 import read_config
 import port_ping
 import nslook
 import gen
 from get_zabbix import zabbix_get
-import get_speedtest
-
 
 # Объект бота
 bot_token = Bot(read_config.bot("token"))
@@ -30,7 +27,6 @@ async def help_ans(message: types.Message):
     await message.reply(F'/ping  введите ip адрес(только ip адрес)\n' \
                         f'/id выдаст ваш id \n' \
                         f'/tracert  введите ip  адрес\n' \
-                        f'/speedtest  вычислит скорость интернета\n' \
                         f'/pport введите адрес хоста и номер порта, через пробел, который хотете проверить\n'\
 	                    f'/nslookup введите имя с указанием домена или IP-адрес\n'\
                         f'/gen введите кол-во сиволов в пароле и чере пробел введите y если нужно с символами \n'\
@@ -89,15 +85,6 @@ async def mess(message):
             str_ind = str_ind.replace("\\n", "")
             await bot_token.send_message(message.chat.id, str_ind, parse_mode='html')
             time.sleep(1)
-    else:
-        await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
-
-@dp.message_handler(commands="speedtest")
-async def mess(message):
-    if read_config.watch_id(message.from_user.id) == True:
-        await message.answer(f'Измирение скорости занимает от 1 до 3х минут ожидайте')
-        speed = get_speedtest.test_speed()
-        await bot_token.send_message(message.chat.id, speed , parse_mode='html')
     else:
         await message.answer(f"Ваш ID: {message.from_user.id} Вам доступ запрещен")
 

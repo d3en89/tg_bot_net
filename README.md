@@ -9,7 +9,7 @@
 по необходимсоти, переодически возвращаюсь к нему чтобы навести красоту или добавить 
 функционал. 
 
-Работает  на Ubuntu 22.04 + Python3.10
+Работает  на Ubuntu 22.04
 
 Может выполнять  
 -  ping
@@ -19,7 +19,6 @@
 -  generate password
 -  Check zabbix status
 -  whois
--  speedtest
 
 ###             ВАЖНЫЕ УСЛОВИЯ            
 
@@ -35,7 +34,3 @@ name = f'{name}.local' -  Вместо local.domain надо ввести сво
 
     port_ping.py
 whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois
-    
-    get_speedtest.py
-Для работы этого скрипта необходимо установить программу speedtest-cli 
-    -   sudo apt-get update && sudo apt-get upgrade && sudo apt-get install speedtest-cli

@@ -1,9 +1,5 @@
 import configparser
 
-""" Здесь собираю все функции которые относятся к чтению данных из файла
-    *в преспективе переделаю данную историю*
-"""
-
 def bot(arg):
     config = configparser.ConfigParser()
     config.read("config.ini")
