@@ -1,7 +1,7 @@
 import subprocess
 from os import devnull
 
-FNULL = open(devnull, 'w')
+FNULL = open(devnull, "w")
 
 def test_speed():
     """ Функция измерения скорости интернета, измеряет скорость интернета там где установлен tg-bot
@@ -15,17 +15,17 @@ def test_speed():
     except subprocess.CalledProcessError:
         val = "bad"
 
-    start_script = subprocess.Popen('/bin/speedtest --secure', shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8')
+    start_script = subprocess.Popen("/bin/speedtest --secure", shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding="utf-8")
 
     match val:
         case "ok":
             res = ""
             for line in start_script.stderr:
-                if 'ERROR' in line:
+                if "ERROR" in line:
                     res += "" + line.strip()
             for line in start_script.stdout:
-                if 'Download' in line or 'Upload' in line:
+                if "Download" in line or "Upload" in line:
                     res += "" + line.strip()
             return res.strip().replace("Upload", " Upload")
         case "bad":
-            return 'Not connection'
+            return "Not connection"

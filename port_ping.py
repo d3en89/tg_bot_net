@@ -7,9 +7,9 @@ def check_port(host, port):
         sock.settimeout(2)
         result = sock.connect_ex((host, port))
         if result == 0:
-            return f'Port is open : code {result}'
+            return f"Port is open : code {result}"
         else:
-            return f'Port is not open : code {result}'
+            return f"Port is not open : code {result}"
 
 
 def whois_ianna(host, key=""):

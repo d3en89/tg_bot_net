@@ -31,7 +31,7 @@
 >Для работы nslookup требуется вести dns сервер
 
 * nslookup.py
-> name = f'{name}.local' -  Вместо local надо ввести свой dns суфикс сети или внутренего домена
+> name = f"{name}.local" -  Вместо local надо ввести свой dns суфикс сети или внутренего домена
 
 * port_ping.py
 > whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois

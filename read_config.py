@@ -32,6 +32,6 @@ def zabbix_data(arg):
 
 def read_dns_server():
     config = configparser.ConfigParser()
-    config.read('config.ini')
-    conf = config.get('dns', 'server')
+    config.read("config.ini")
+    conf = config.get("dns", "server")
     return conf

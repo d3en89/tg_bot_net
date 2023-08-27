@@ -1,8 +1,7 @@
 from pyzabbix import ZabbixAPI
-import read_config
 
 def zabbix_get(server, user, password, response=False):
-    zabbix = ZabbixAPI(url=f'{server}', user=f'{user}', password=f'{password}')
+    zabbix = ZabbixAPI(url=f"{server}", user=f"{user}", password=f"{password}")
     result1 = zabbix.host.get(monitored_hosts=1)
     hosts = {}
     count = 0
@@ -11,7 +10,7 @@ def zabbix_get(server, user, password, response=False):
         hosts[host_list.get("host")] = count
         count += 1
     try:
-        status = result1[hosts[f'{response}']]['available']
+        status = result1[hosts[f"{response}"]]["available"]
         if status == "1":
             status = "ONLINE"
         else:

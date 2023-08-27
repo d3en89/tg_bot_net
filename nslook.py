@@ -2,10 +2,10 @@ import dns.resolver
 from dns import reversename, resolver
 from read_config import read_dns_server
 
-def look_up(name, ntype=['A', 'AAAA', 'MX', 'NS', 'SOA']):
+def look_up(name, ntype=["A", "AAAA", "MX", "NS", "SOA"]):
 
     if not "." in name:
-        name = f'{name}.local'
+        name = f"{name}.local"
 
     try:
         answer = dns.resolver.Resolver()
