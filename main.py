@@ -22,6 +22,8 @@ if not bot_token:
 dp = Dispatcher(bot_token)
 
 def access_enabled_id(func):
+    """ Декоратор для проверки id который вызывает зендлер есть ли
+        в списке разрешенных или нет """
     async def wrapper(message: types.Message):
         if read_config.watch_id(message.from_user.id):
             await func(message)
