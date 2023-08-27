@@ -100,7 +100,7 @@ async def mess(message):
 @access_enabled_id
 async def mess(message):
     await message.answer(f"Измирение скорости занимает от 1 до 3х минут ожидайте")
-    speed = get_speedtest.test_speed()
+    speed = get_speedtest.check_speedtest()
     await bot_token.send_message(message.chat.id, speed , parse_mode="html")
 
 
