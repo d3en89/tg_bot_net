@@ -12,7 +12,6 @@ import gen
 from get_zabbix import zabbix_get
 import get_speedtest
 
-
 # Объект бота
 bot_token = Bot(read_config.bot("token"))
 if not bot_token:
@@ -21,37 +20,41 @@ if not bot_token:
 # Диспетчер для бота
 dp = Dispatcher(bot_token)
 
+
 def access_enabled_id(func):
     async def wrapper(message: types.Message):
         if read_config.watch_id(message.from_user.id):
             await func(message)
         else:
             await message.reply("Вашего ID нету в разрешенном списке")
+
     return wrapper
+
 
 # Включаем логирование, чтобы не пропустить важные сообщения
 logging.basicConfig(level=logging.INFO)
+
 
 # Хэндлер на команду
 @dp.message_handler(commands="help")
 @access_enabled_id
 async def help_ans(message: types.Message):
-    await message.reply(F'/ping  введите ip адрес(только ip адрес)\n' \
-                        f'/id выдаст ваш id \n' \
-                        f'/tracert  введите ip  адрес\n' \
-                        f'/speedtest  вычислит скорость интернета\n' \
-                        f'/pport введите адрес хоста и номер порта, через пробел, который хотете проверить\n'\
-	                    f'/nslookup введите имя с указанием домена или IP-адрес\n'\
-                        f'/gen введите кол-во сиволов в пароле и чере пробел введите y если нужно с символами \n'\
+    await message.reply(F'/ping  введите ip адрес(только ip адрес)\n'
+                        f'/id выдаст ваш id \n'
+                        f'/tracert  введите ip  адрес\n'
+                        f'/speedtest  вычислит скорость интернета\n'
+                        f'/pport введите адрес хоста и номер порта, через пробел, который хотете проверить\n'
+                        f'/nslookup введите имя с указанием домена или IP-адрес\n'
+                        f'/gen введите кол-во сиволов в пароле и чере пробел введите y если нужно с символами \n'
                         f'/whois введите ip  для получения информации по ip или домену,  если хотите получить \n'
-                        f' расширенную информацию после ip или домена через пробел введите i \n'\
-                        f'/status введите имя сервера для просмотра статуса \n' \
-                        f'/start работа с кнопками \n' \
-                        f'/stop удалить кнопки \n' \
+                        f' расширенную информацию после ip или домена через пробел введите i \n'
+                        f'/status введите имя сервера для просмотра статуса \n'
+                        f'/start работа с кнопками \n'
+                        f'/stop удалить кнопки \n'
                         )
 
 
-### Получаем id пользователя
+# Получаем id пользователя
 @dp.message_handler(commands=['id'])
 @access_enabled_id
 async def alarm(message: types.Message):
@@ -71,8 +74,9 @@ async def mess(message):
     except RuntimeError as e:
         e1 = e.args[0].split("\"")
         if e1[0] == "Cannot resolve address ":
-             ping_ip = e1[0]
+            ping_ip = e1[0]
     await bot_token.send_message(message.chat.id, ping_ip, parse_mode='html')
+
 
 @dp.message_handler(commands="tracert")
 @access_enabled_id
@@ -94,13 +98,13 @@ async def mess(message):
         await bot_token.send_message(message.chat.id, str_ind, parse_mode='html')
         time.sleep(1)
 
+
 @dp.message_handler(commands="speedtest")
 @access_enabled_id
 async def mess(message):
     await message.answer(f'Измирение скорости занимает от 1 до 3х минут ожидайте')
     speed = get_speedtest.test_speed()
-    await bot_token.send_message(message.chat.id, speed , parse_mode='html')
-
+    await bot_token.send_message(message.chat.id, speed, parse_mode='html')
 
 
 @dp.message_handler(commands='pport')
@@ -115,7 +119,6 @@ async def mess(message):
         await message.reply("Введите корректные данные")
 
 
-
 @dp.message_handler(commands="nslookup")
 @access_enabled_id
 async def mess(message):
@@ -128,6 +131,7 @@ async def mess(message):
         for i in look:
             await bot_token.send_message(message.chat.id, i, parse_mode='html')
 
+
 @dp.message_handler(commands="gen")
 @access_enabled_id
 async def mess(message):
@@ -135,7 +139,6 @@ async def mess(message):
     mes = get_message_bot.split(" ")
     generate = gen.generator(mes[1:3])
     await bot_token.send_message(message.chat.id, generate)
-
 
 
 @dp.message_handler(commands="whois")
@@ -163,7 +166,6 @@ async def mess(message):
                                                       f"{err}", parse_mode='html')
 
 
-
 @dp.message_handler(commands="status")
 @access_enabled_id
 async def mess(message):
@@ -172,8 +174,14 @@ async def mess(message):
     if len(mes) == 1:
         search = "Не указан сервер после /status"
     else:
-        search = zabbix_get(read_config.zabbix_data("server"),read_config.zabbix_data("user"),read_config.zabbix_data("password"),response=mes[1])
-    await bot_token.send_message(message.chat.id, search, parse_mode='html')
+        search = zabbix_get(read_config.zabbix_data("server"),
+                            read_config.zabbix_data("user"),
+                            read_config.zabbix_data("password"),
+                            response=mes[1])
+    await bot_token.send_message(
+                            message.chat.id,
+                            search,
+                            parse_mode='html')
 
 
 @dp.message_handler(commands="start")
@@ -194,4 +202,3 @@ async def mess(message: types.Message):
 if __name__ == "__main__":
     # Запуск бота
     executor.start_polling(dp, skip_updates=True)
-
