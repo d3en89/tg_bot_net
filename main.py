@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Dispatcher, executor, types
 import os
 
 import read_config

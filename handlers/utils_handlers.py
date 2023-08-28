@@ -5,11 +5,8 @@ from bot import bot_token
 from pythonping import ping
 
 import read_config
-import port_ping
-import nslook
-import gen
-from get_zabbix import zabbix_get
-import get_speedtest
+from bot_utils import gen, get_speedtest, port_ping, nslook
+from bot_utils.get_zabbix import zabbix_get
 
 
 async def check_ping(message: types.Message):
