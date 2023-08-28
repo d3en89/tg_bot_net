@@ -1,14 +1,14 @@
 from aiogram import Dispatcher, types
 import time
 import subprocess
-from bot import bot_token
+from bot import bot_token, access_enabled_id
 from pythonping import ping
 
 import read_config
-from bot_utils import gen, get_speedtest, port_ping, nslook
-from bot_utils.get_zabbix import zabbix_get
+from bot_utils import gen, get_speedtest, port_ping, nslook, zabbix_get
 
 
+@access_enabled_id
 async def check_ping(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/ping ")
@@ -24,6 +24,7 @@ async def check_ping(message: types.Message):
     await bot_token.send_message(message.chat.id, ping_ip, parse_mode="html")
 
 
+@access_enabled_id
 async def check_tracert(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/tracert ")
@@ -43,12 +44,14 @@ async def check_tracert(message: types.Message):
         time.sleep(1)
 
 
+@access_enabled_id
 async def check_speedtest(message: types.Message):
     await message.answer(f"Измирение скорости занимает от 1 до 3х минут ожидайте")
     speed = get_speedtest.check_speedtest()
     await bot_token.send_message(message.chat.id, speed , parse_mode="html")
 
 
+@access_enabled_id
 async def check_open_port(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -59,6 +62,7 @@ async def check_open_port(message: types.Message):
         await message.reply("Введите корректные данные")
 
 
+@access_enabled_id
 async def check_dns_name(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -70,6 +74,7 @@ async def check_dns_name(message: types.Message):
             await bot_token.send_message(message.chat.id, i, parse_mode="html")
 
 
+@access_enabled_id
 async def generate_pass(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -77,6 +82,7 @@ async def generate_pass(message: types.Message):
     await bot_token.send_message(message.chat.id, generate)
 
 
+@access_enabled_id
 async def check_author_domain(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -100,6 +106,7 @@ async def check_author_domain(message: types.Message):
                                                       f"{err}", parse_mode="html")
 
 
+@access_enabled_id
 async def check_status_server(message: types.Message):
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/status ")
