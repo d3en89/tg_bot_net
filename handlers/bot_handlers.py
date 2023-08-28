@@ -30,8 +30,12 @@ async def get_id(message: types.Message):
 @access_enabled_id
 async def cmd_start(message: types.Message):
     button1 = types.KeyboardButton("/help")
-    kb_client = types.ReplyKeyboardMarkup()
-    kb_client.add(button1)
+    button2 = types.KeyboardButton("/id")
+    button3 = types.KeyboardButton("/speedtest")
+    button4 = types.KeyboardButton("/stop")
+    kb_client = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = [button1, button2, button3, button4]
+    kb_client.add(*buttons)
     await message.answer("Выбирайте команду", reply_markup=kb_client)
 
 
