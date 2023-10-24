@@ -1,10 +1,11 @@
 from aiogram import  Dispatcher, types
+from typing import NoReturn
 
 from read_config import watch_id
 from bot import access_enabled_id
 
 
-async def help_ans(message: types.Message):
+async def help_ans(message: types.Message) -> NoReturn:
     await message.reply(F"/ping  введите ip адрес(только ip адрес)\n" \
                         f"/id выдаст ваш id \n" \
                         f"/tracert  введите ip  адрес\n" \
@@ -20,7 +21,7 @@ async def help_ans(message: types.Message):
                         )
 
 
-async def get_id(message: types.Message):
+async def get_id(message: types.Message) -> NoReturn:
     if watch_id(message.from_user.id):
         await message.answer(f"Ваш ID: {message.from_user.id}\nВаш id добавлен в список разрешенных")
     else:
@@ -28,7 +29,7 @@ async def get_id(message: types.Message):
 
 
 @access_enabled_id
-async def cmd_start(message: types.Message):
+async def cmd_start(message: types.Message) -> NoReturn:
     button1 = types.KeyboardButton("/help")
     button2 = types.KeyboardButton("/id")
     button3 = types.KeyboardButton("/speedtest")
@@ -40,11 +41,11 @@ async def cmd_start(message: types.Message):
 
 
 @access_enabled_id
-async def cmd_stop(message: types.Message):
+async def cmd_stop(message: types.Message) -> NoReturn:
     return await message.answer(text="Кнопки удалены", reply_markup=types.ReplyKeyboardRemove())
 
 
-def register_bot_handlers(dp : Dispatcher):
+def register_bot_handlers(dp : Dispatcher) -> NoReturn:
     dp.register_message_handler(help_ans, commands=["help"])
     dp.register_message_handler(get_id, commands=["id"])
     dp.register_message_handler(cmd_start, commands=["start"])

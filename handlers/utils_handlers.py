@@ -3,13 +3,13 @@ import time
 import subprocess
 from bot import bot_token, access_enabled_id
 from pythonping import ping
-
+from typing import NoReturn
 import read_config
 from bot_utils import gen, get_speedtest, port_ping, nslook, zabbix_get
 
 
 @access_enabled_id
-async def check_ping(message: types.Message):
+async def check_ping(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/ping ")
     try:
@@ -25,7 +25,7 @@ async def check_ping(message: types.Message):
 
 
 @access_enabled_id
-async def check_tracert(message: types.Message):
+async def check_tracert(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/tracert ")
     ip = mes[1]
@@ -45,14 +45,14 @@ async def check_tracert(message: types.Message):
 
 
 @access_enabled_id
-async def check_speedtest(message: types.Message):
+async def check_speedtest(message: types.Message) -> NoReturn:
     await message.answer(f"Измирение скорости занимает от 1 до 3х минут ожидайте")
     speed = get_speedtest.check_speedtest()
     await bot_token.send_message(message.chat.id, speed , parse_mode="html")
 
 
 @access_enabled_id
-async def check_open_port(message: types.Message):
+async def check_open_port(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
     try:
@@ -63,7 +63,7 @@ async def check_open_port(message: types.Message):
 
 
 @access_enabled_id
-async def check_dns_name(message: types.Message):
+async def check_dns_name(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
     look = nslook.look_up(mes[1])
@@ -75,7 +75,7 @@ async def check_dns_name(message: types.Message):
 
 
 @access_enabled_id
-async def generate_pass(message: types.Message):
+async def generate_pass(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
     generate = gen.generator(mes[1:3])
@@ -83,7 +83,7 @@ async def generate_pass(message: types.Message):
 
 
 @access_enabled_id
-async def check_author_domain(message: types.Message):
+async def check_author_domain(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
     try:
@@ -107,7 +107,7 @@ async def check_author_domain(message: types.Message):
 
 
 @access_enabled_id
-async def check_status_server(message: types.Message):
+async def check_status_server(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split("/status ")
     if len(mes) == 1:
@@ -117,7 +117,7 @@ async def check_status_server(message: types.Message):
     await bot_token.send_message(message.chat.id, search, parse_mode="html")
 
 
-def register_utils_dp(dp : Dispatcher):
+def register_utils_dp(dp : Dispatcher) -> NoReturn:
     dp.register_message_handler(check_ping, commands=['ping'])
     dp.register_message_handler(check_speedtest, commands=['speedtest'])
     dp.register_message_handler(check_tracert, commands=['tracert'])

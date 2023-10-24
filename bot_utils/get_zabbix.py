@@ -1,6 +1,6 @@
 from pyzabbix import ZabbixAPI
 
-def zabbix_get(server, user, password, response=False):
+def zabbix_get(server, user, password, response=False) -> str:
     zabbix = ZabbixAPI(url=f"{server}", user=f"{user}", password=f"{password}")
     result1 = zabbix.host.get(monitored_hosts=1)
     hosts = {}

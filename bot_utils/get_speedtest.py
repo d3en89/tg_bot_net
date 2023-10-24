@@ -3,7 +3,7 @@ from os import devnull
 
 FNULL = open(devnull, "w")
 
-def check_speedtest():
+def check_speedtest() -> str:
     """ Функция измерения скорости интернета, измеряет скорость интернета там где установлен tg-bot
     :return:
     """

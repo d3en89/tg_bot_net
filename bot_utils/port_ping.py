@@ -2,7 +2,7 @@ import socket
 from contextlib import closing
 from subprocess import run, PIPE, STDOUT
 
-def check_port(host, port):
+def check_port(host, port) -> str:
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
         sock.settimeout(2)
         result = sock.connect_ex((host, port))
@@ -12,7 +12,7 @@ def check_port(host, port):
             return f"Port is not open : code {result}"
 
 
-def whois_ianna(host, key=""):
+def whois_ianna(host, key="") -> str:
     """ Получвем сведенья об IP или Домене с офф IANNA  через локальный whois
     :param host - IP или Домен
     :key key -  ключ для расширенного вывода информации"""

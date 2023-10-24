@@ -1,7 +1,7 @@
 import random
 from string import ascii_letters, digits, punctuation
 
-def generator(arg: list):
+def generator(arg: list) -> str:
     chars = [*ascii_letters, *digits]
     password = ''
     if len(arg) > 1 and arg[1] == "y":
