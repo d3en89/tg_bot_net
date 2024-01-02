@@ -1,4 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+import asyncio
 
 import read_config
 
@@ -8,7 +10,10 @@ if not bot_token:
     exit("Error: no token provided")
 
 # Диспетчер для бота
-dp = Dispatcher(bot_token)
+storage_mem = MemoryStorage()
+loops = asyncio.get_event_loop()
+dp = Dispatcher(bot_token, storage=storage_mem, loop=loops)
+
 
 def access_enabled_id(func):
     """ Декоратор для проверки id который вызывает зендлер есть ли
