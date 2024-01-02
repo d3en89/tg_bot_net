@@ -1,6 +1,7 @@
 import random
 from string import ascii_letters, digits, punctuation
 
+
 def generator(arg: list) -> str:
     chars = [*ascii_letters, *digits]
     password = ''
@@ -8,4 +9,5 @@ def generator(arg: list) -> str:
         chars = [*chars, *punctuation]
     for i in range(int(arg[0])):
         password += random.choice(chars)
+
     return password
