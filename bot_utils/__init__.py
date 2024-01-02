@@ -1,5 +1,9 @@
-from bot_utils import gen
-from bot_utils import get_speedtest
-from bot_utils.get_zabbix import zabbix_get
-from bot_utils import my_nslook
-from bot_utils import port_ping
+all = "bot_utils_package"
+from .gen import *
+from .get_zabbix import *
+from .my_nslook import *
+from .my_ping import *
+from .get_speedtest import *
+from .port_ping import *
+from .whois_ianna import *
+from .my_tracert import *

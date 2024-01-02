@@ -1,19 +1,27 @@
 # -*- coding: utf-8 -*-
 import logging
-from aiogram import Dispatcher, executor, types
-import os
+from handlers import bot_handlers, utils_handlers, utils_with_state
 
-import read_config
 from bot import dp
-from handlers import utils_handlers, bot_handlers
 
+
+# noinspection PyUnreachableCode
+def register_handlers():
+
+    ## Регестрируем наши хендлеры
+    bot_handlers.register_bot_handlers(dp)
+    utils_handlers.register_utils_handlers(dp)
+    utils_with_state.register_state_handlers(dp)
+
+# # Включаем логирование, чтобы не пропустить важные сообщения
 logging.basicConfig(level=logging.INFO)
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 
 if __name__ == "__main__":
-    utils_handlers.register_utils_dp(dp)
-    bot_handlers.register_bot_handlers(dp)
+    import os
+    from aiogram import executor
 
-    executor.start_polling(dp, skip_updates=True)
+    os.chdir(os.getcwd())
+    register_handlers()
+    # Запуск бота
+    executor.start_polling(dp, skip_updates=False)
 
