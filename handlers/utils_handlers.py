@@ -66,7 +66,7 @@ async def check_open_port(message: types.Message) -> NoReturn:
 async def check_dns_name(message: types.Message) -> NoReturn:
     get_message_bot: object = message.text.strip()
     mes = get_message_bot.split(" ")
-    look = nslook.look_up(mes[1])
+    look = my_nslook.look_up(mes[1])
     if type(look) != list:
         await bot_token.send_message(message.chat.id, look, parse_mode="html")
     else:

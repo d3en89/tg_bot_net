@@ -1,8 +1,10 @@
 import configparser
 
+
 """ Здесь собираю все функции которые относятся к чтению данных из файла
     *в преспективе переделаю данную историю*
 """
+
 
 def bot(arg) -> str:
     config = configparser.ConfigParser()
@@ -24,14 +26,30 @@ def watch_id(val) -> bool:
     out = any(i)
     return out
 
+
 def zabbix_data(arg) -> str:
     config = configparser.ConfigParser()
     config.read("config.ini")
     data = config.get("zabbix_connection", f"{arg}")
     return data
 
+
 def read_dns_server() -> str:
     config = configparser.ConfigParser()
     config.read("config.ini")
     conf = config.get("dns", "server")
+    return conf
+
+
+def read_ip() -> str:
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    conf = config.get('ping', 'ip')
+    return conf
+
+
+def read_dns_suffix() -> list:
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    conf = [config.get('dns', 'domain_suffix_active'), config.get('dns', 'domain_suffix')]
     return conf
