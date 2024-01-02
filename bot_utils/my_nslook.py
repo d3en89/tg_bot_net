@@ -4,6 +4,11 @@ from read_config import read_dns_server, read_dns_suffix
 
 
 def look_up(name, ntype=['A', 'AAAA', 'MX', 'NS', 'SOA']) -> list | str:
+    """ Функция проверки dns записи
+    :param name - указывем имя хоста или ip
+    """
+
+
     if not "." in name and read_dns_suffix()[0] == "True":
         name = f'{name}{read_dns_suffix()[1]}'
 

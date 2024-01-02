@@ -1,9 +1,14 @@
 from pythonping import ping
 
 
-def func_ping(mes: list|str, fl :str) -> list|str:
-    """
-        Обычный пинг
+def func_ping(mes: list | str, fl: str) -> list | str:
+    """ Обычный пинг
+    :param mes - принимает на вход список или строку, передача данных зависит от параметра fl
+                fl == No State -  list[1] == host
+                                  list[0] == any str
+                fl == State - str == host
+    :param fl - используется для понимания используется режим машиносостояния или же
+                сразу команда с указанием хоста
     """
     try:
         if fl == "No state":

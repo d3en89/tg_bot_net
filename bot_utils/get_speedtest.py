@@ -5,11 +5,12 @@ import asyncio
 
 FNULL = open(devnull, "w")
 
-def check_speedtest() -> str:
+
+async def check_speedtest() -> str:
     """ Функция измерения скорости интернета, измеряет скорость интернета там где установлен tg-bot
     :return:
     """
- try:
+    try:
         subprocess.check_call(["ping", "-c 1", "ya.ru"],
                               stdout=FNULL,
                               stderr=subprocess.STDOUT)
@@ -17,7 +18,8 @@ def check_speedtest() -> str:
     except subprocess.CalledProcessError:
         val = "bad"
 
-    start_script = await asyncio.create_subprocess_exec('/bin/speedtest', "--secure", stderr=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE)
+    start_script = await asyncio.create_subprocess_exec('/bin/speedtest', "--secure", stderr=asyncio.subprocess.PIPE,
+                                                        stdout=asyncio.subprocess.PIPE)
 
     st_out = await start_script.stdout.read()
     line_out = st_out.decode('utf-8').split("\n")

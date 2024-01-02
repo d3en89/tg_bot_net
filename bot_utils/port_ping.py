@@ -4,8 +4,11 @@ from contextlib import closing
 
 
 def func_check_port(mes: list, fl: str) -> str:
-    """
-        Функция для проверки подключения к порту(открыт порт или нет)
+    """Функция для проверки подключения к порту(открыт порт или нет)
+    :param mes -  сюда передается данные в виде списка  по индексам 0 - хост
+                                                                   1 - порт
+    :param fl - используется для понимания используется режим машиносостояния или же
+                сразу команда с указанием хоста и порта
     """
 
     def check_port(host, port) -> str:
@@ -14,9 +17,9 @@ def func_check_port(mes: list, fl: str) -> str:
             sock.settimeout(2)
             result = sock.connect_ex((host, port))
             if result == 0:
-                return f'Port is open : code {result}'
+                return f"Port is open : code {result}"
             else:
-                return f'Port is not open : code {result}'
+                return f"Port is not open : code {result}"
 
     try:
         if fl == "No state":

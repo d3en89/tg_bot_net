@@ -30,11 +30,18 @@
 >Для работы с ботом обязательно надо ввести свой id telegram в файл conf.ini\
 >Для работы nslookup требуется вести dns сервер
 
-* port_ping.py
-> whois - функция использует локальный софт whois, установить его можено sudo apt-get install whois
-
+* whois_ianna.py
+> whois - функция использует локальный софт whois, устанавливается:\
+    ```
+    sudo apt-get update && sudo apt-get upgrade && sudo apt-get install whois
+    ```
 * get_speedtest.py
 > Для работы этого скрипта необходимо установить программу speedtest-cli\
     ```
     sudo apt-get update && sudo apt-get upgrade && sudo apt-get install speedtest-cli
+    ```
+* my_tracert.py
+> Для работы этого скрипта необходимо установить traceroute\
+    ```
+    sudo apt-get update && sudo apt-get upgrade && sudo apt-get install traceroute
     ```
