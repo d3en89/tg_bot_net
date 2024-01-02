@@ -5,7 +5,7 @@ from bot import bot_token, access_enabled_id
 from pythonping import ping
 from typing import NoReturn
 import read_config
-from bot_utils import gen, get_speedtest, port_ping, nslook, zabbix_get
+from bot_utils import gen, get_speedtest, port_ping, my_nslook, zabbix_get
 
 
 @access_enabled_id
