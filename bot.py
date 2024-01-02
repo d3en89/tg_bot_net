@@ -9,6 +9,7 @@ bot_token = Bot(read_config.bot("token"))
 if not bot_token:
     exit("Error: no token provided")
 
+
 # Диспетчер для бота
 storage_mem = MemoryStorage()
 loops = asyncio.get_event_loop()
