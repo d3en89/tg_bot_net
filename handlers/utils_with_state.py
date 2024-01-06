@@ -142,10 +142,8 @@ async def check_dns_name(message: types.Message) -> NoReturn:
     mes = get_message_bot.split(" ")
     if len(mes) > 1:
         look = look_up(mes[1])
-        if type(look) != list:
-            await bot_token.send_message(message.chat.id, look, parse_mode='html')
-        else:
-            for i in look:
+        for i in look:
+            if i != None:
                 await bot_token.send_message(message.chat.id, i, parse_mode='html')
 
     if len(mes) == 1:
@@ -158,10 +156,9 @@ async def get_look_up(message: types.Message, state : FSMContext) -> NoReturn:
     mes = get_message_bot.split(" ")
     look = look_up(mes[0])
     if type(look) != list:
-        await bot_token.send_message(message.chat.id, look, parse_mode='html')
-    else:
         for i in look:
-            await bot_token.send_message(message.chat.id, i, parse_mode='html')
+            if i != None:
+                await bot_token.send_message(message.chat.id, i, parse_mode='html')
 
     await state.finish()
 
