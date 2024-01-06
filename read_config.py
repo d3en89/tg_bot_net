@@ -9,22 +9,19 @@ import configparser
 def bot(arg) -> str:
     config = configparser.ConfigParser()
     config.read("config.ini")
-    bot = config.get("Bot", f"{arg}")
-    return bot
+    bot_token = config.get("Bot", f"{arg}")
+    return bot_token
+
 
 def watch_id(val) -> bool:
-    i=[]
-    config= configparser.ConfigParser()
+    i = []
+    config = configparser.ConfigParser()
     config.read("config.ini")
-    ids= config.get("White_List","id")
-    id_a = ids.split(",")
-    for id in id_a:
-        if str(id) == str(val):
-            i.append(True)
-        else:
-            i.append(False)
-    out = any(i)
-    return out
+    id_list = config.get("White_List","id")
+    if str(val) in id_list.split(','):
+        return True
+    else:
+        return False
 
 
 def zabbix_data(arg) -> str:
@@ -51,5 +48,5 @@ def read_ip() -> str:
 def read_dns_suffix() -> list:
     config = configparser.ConfigParser()
     config.read('config.ini')
-    conf = [config.get('dns', 'domain_suffix_active'), config.get('dns', 'domain_suffix')]
-    return conf
+    conf_suffix = [config.get('dns', 'domain_suffix_active'), config.get('dns', 'domain_suffix')]
+    return conf_suffix
