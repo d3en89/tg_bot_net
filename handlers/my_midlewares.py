@@ -17,5 +17,4 @@ class CheckAccess(BaseMiddleware):
         elif watch_id(message.from_user.id):
             return data
         else:
-           await dp.bot.send_message(message.chat.id,'Вас нет в списке разрешенных')
-           raise PermissionError('Вас нет в списке разрешенных')
+           raise PermissionError('Для вашего ID использование бота запрещено')
