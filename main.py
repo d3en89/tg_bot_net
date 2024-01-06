@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from handlers import bot_handlers, utils_handlers, utils_with_state
+from handlers import bot_handlers, utils_handlers, utils_with_state, my_errors_handlers
 
 from bot import dp
 
@@ -9,6 +9,7 @@ from bot import dp
 def register_handlers():
     ## Регестрируем наши хендлеры
     bot_handlers.register_bot_handlers(dp)
+    my_errors_handlers.register_error_handler(dp)
     utils_handlers.register_utils_handlers(dp)
     utils_with_state.register_state_handlers(dp)
 
