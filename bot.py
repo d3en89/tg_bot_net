@@ -18,6 +18,7 @@ dp = Dispatcher(bot_token, storage=storage_mem, loop=loops)
 
 def access_enabled_id(func):
     """ Декоратор для проверки id который вызывает зендлер есть ли
+        ***функция устарела, теперь используется midleware
         в списке разрешенных или нет """
     async def wrapper(message: types.Message) -> str|bool:
         if read_config.watch_id(message.from_user.id):

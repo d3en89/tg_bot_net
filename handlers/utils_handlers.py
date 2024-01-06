@@ -8,7 +8,6 @@ import read_config
 import bot_utils
 
 
-@access_enabled_id
 async def check_speedtest(message: types.Message) -> NoReturn:
     await message.answer(f"Измирение скорости занимает от 1 до 3х минут ожидайте")
     a_speed = await dp.loop.create_task(bot_utils.get_speedtest())
@@ -16,7 +15,6 @@ async def check_speedtest(message: types.Message) -> NoReturn:
                                                   f'{a_speed}', parse_mode='html')
 
 
-@access_enabled_id
 async def check_status_server(message: types.Message) -> NoReturn:
     get_message_bot = message.text.strip()
     mes = get_message_bot.split("/status ")

@@ -19,7 +19,7 @@ class CmdState(StatesGroup):
     enter_whois = State()  #
     enter_tracert = State() #
 
-@access_enabled_id
+
 async def check_ping(message: types.Message) -> NoReturn:
     if len(message.text.split(" ")) == 1:
         await CmdState.enter_command.set()
@@ -46,7 +46,6 @@ async def get_data(message: types.Message, state: FSMContext) -> NoReturn:
 
 
 # noinspection PyTypeChecker
-@access_enabled_id
 async def check_open_port(message: types.Message, ) -> NoReturn:
     if len(message.text.split(" ")) == 1:
         await CmdState.enter_pport.set()
@@ -71,7 +70,6 @@ async def get_pping_data(message: types.Message, state: FSMContext) -> NoReturn:
         await state.finish()
 
 
-@access_enabled_id
 async def gen_pass(message: types.Message, ) -> NoReturn:
     if len(message.text.split(" ")) == 1:
         await CmdState.enter_gen.set()
@@ -92,7 +90,6 @@ async def generate_pass(message: types.Message, state: FSMContext) -> NoReturn:
     await state.finish()
 
 
-@access_enabled_id
 async def check_author_domain(message: types.Message) -> NoReturn:
     get_message_bot = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -121,8 +118,6 @@ async def check_author_domain(message: types.Message) -> NoReturn:
         await message.reply("Введите имя или ip сервера")
 
 
-
-
 async def get_author(message: types.Message, state: FSMContext) -> NoReturn:
     mes = message.text.strip().split()
     try:
@@ -142,7 +137,6 @@ async def get_author(message: types.Message, state: FSMContext) -> NoReturn:
     await state.finish()
 
 
-@access_enabled_id
 async def check_dns_name(message: types.Message) -> NoReturn:
     get_message_bot = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -172,7 +166,6 @@ async def get_look_up(message: types.Message, state : FSMContext) -> NoReturn:
     await state.finish()
 
 
-@access_enabled_id
 async def start_tracert(message: types.Message) -> NoReturn:
     get_message_bot = message.text.strip()
     mes = get_message_bot.split(" ")
@@ -188,7 +181,6 @@ async def start_tracert(message: types.Message) -> NoReturn:
         await message.reply(f'Введите имя сервера или ip\n'
                             f'и если необходимо через пробел\n'
                             f'кол-во прыжков')
-
 
 
 async def get_data_tracert(message: types.Message, state : FSMContext) -> NoReturn:

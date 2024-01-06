@@ -2,7 +2,6 @@ from aiogram import  Dispatcher, types
 from typing import NoReturn
 
 from read_config import watch_id
-from bot import access_enabled_id
 
 
 async def help_ans(message: types.Message) -> NoReturn:
@@ -26,7 +25,6 @@ async def get_id(message: types.Message) -> NoReturn:
         await message.answer(f"Ваш ID: {message.from_user.id}\nВам доступ запрещен")
 
 
-@access_enabled_id
 async def cmd_start(message: types.Message) -> NoReturn:
     button1 = types.KeyboardButton("/help")
     button2 = types.KeyboardButton("/id")
@@ -38,7 +36,6 @@ async def cmd_start(message: types.Message) -> NoReturn:
     await message.answer("Выбирайте команду", reply_markup=kb_client)
 
 
-@access_enabled_id
 async def cmd_stop(message: types.Message) -> NoReturn:
     return await message.answer(text="Кнопки удалены", reply_markup=types.ReplyKeyboardRemove())
 

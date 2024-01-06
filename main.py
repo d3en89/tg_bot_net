@@ -7,11 +7,11 @@ from bot import dp
 
 # noinspection PyUnreachableCode
 def register_handlers():
-
     ## Регестрируем наши хендлеры
     bot_handlers.register_bot_handlers(dp)
     utils_handlers.register_utils_handlers(dp)
     utils_with_state.register_state_handlers(dp)
+
 
 # # Включаем логирование, чтобы не пропустить важные сообщения
 logging.basicConfig(level=logging.INFO)
