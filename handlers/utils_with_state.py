@@ -142,9 +142,12 @@ async def check_dns_name(message: types.Message) -> NoReturn:
     mes = get_message_bot.split(" ")
     if len(mes) > 1:
         look = look_up(mes[1])
-        for i in look:
-            if i != None:
-                await bot_token.send_message(message.chat.id, i, parse_mode='html')
+        if type(look) == list:
+            for i in look:
+                if i != None:
+                    await bot_token.send_message(message.chat.id, i, parse_mode='html')
+        else:
+            await bot_token.send_message(message.chat.id, str(look), parse_mode='html')
 
     if len(mes) == 1:
         await CmdState.enter_nslookup.set()
@@ -155,10 +158,12 @@ async def get_look_up(message: types.Message, state : FSMContext) -> NoReturn:
     get_message_bot = message.text.strip()
     mes = get_message_bot.split(" ")
     look = look_up(mes[0])
-    if type(look) != list:
+    if type(look) == list:
         for i in look:
             if i != None:
                 await bot_token.send_message(message.chat.id, i, parse_mode='html')
+    else:
+        await bot_token.send_message(message.chat.id, str(look), parse_mode='html')
 
     await state.finish()
 
