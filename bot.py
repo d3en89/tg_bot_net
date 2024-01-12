@@ -1,5 +1,5 @@
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.fsm_storage.redis import RedisStorage2
 import asyncio
 
 import read_config
@@ -11,7 +11,7 @@ if not bot_token:
 
 
 # Диспетчер для бота
-storage_mem = MemoryStorage()
+storage_mem = RedisStorage2()
 loops = asyncio.get_event_loop()
 dp = Dispatcher(bot_token, storage=storage_mem, loop=loops)
 
