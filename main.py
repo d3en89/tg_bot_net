@@ -3,11 +3,12 @@ import logging
 from handlers import bot_handlers, utils_handlers, utils_with_state, my_errors_handlers
 
 from bot import dp
-
+from handlers.my_midlewares import CheckAccess
 
 # noinspection PyUnreachableCode
 def register_handlers():
     ## Регестрируем наши хендлеры
+    dp.middleware.setup(CheckAccess())
     bot_handlers.register_bot_handlers(dp)
     my_errors_handlers.register_error_handler(dp)
     utils_handlers.register_utils_handlers(dp)
