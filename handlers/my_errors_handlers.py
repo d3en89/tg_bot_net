@@ -5,6 +5,8 @@ from aiogram.utils import exceptions
 from aiogram.dispatcher import Dispatcher
 from typing import NoReturn
 
+from aiogram.utils.exceptions import MessageError
+
 
 async def error_handler(update: types.Update, exception: exceptions.TelegramAPIError):
     """ Здесь создаём обработчик событий
@@ -12,6 +14,10 @@ async def error_handler(update: types.Update, exception: exceptions.TelegramAPIE
     :  действие если необходимо
     : return True
     """
+
+    if isinstance(exception, MessageError):
+        await update.message.reply('Message text is empty')
+        return True
 
     if isinstance(exception, PermissionError):
         match str(exception):
