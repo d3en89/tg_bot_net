@@ -6,6 +6,8 @@ from aiogram import types
 from typing import NoReturn
 
 from db.my_redis_client import check_hash_table
+from db.hash_commands import generate_value_keyboard
+from handlers.bot_handlers import cmd_start
 from bot import bot_token, dp
 from bot_utils import (func_ping, func_check_port,
                        generator, get_whois_ianna,
@@ -22,11 +24,14 @@ class CmdState(StatesGroup):
     enter_whois: State = State()
     enter_tracert: State = State()
 
+
 async def check_ping(message: types.Message) -> NoReturn:
     await dp.storage.set_data(user=message.from_user.id, data=message.text)
     if len(message.text.split(" ")) == 1:
         await CmdState.enter_command.set()
-        await message.reply(f'Введите имя сервера или ip')
+        await message.reply("Введите или выберите имя или ip сервера\n",
+                            reply_markup=generate_value_keyboard(id_user=message.from_user.id,
+                                                                 use_command=message.text))
     else:
         use_command = message.text.split(" ")
         await check_hash_table(message.from_user.id, use_command[0].replace('/', ""), " ".join(use_command[1:]))
@@ -42,6 +47,7 @@ async def cancel_message(message: types.Message, state: FSMContext) -> NoReturn:
         return
     await state.finish()
     await message.reply("Отменено")
+    await cmd_start(message)
 
 
 async def get_data(message: types.Message, state: FSMContext) -> NoReturn:
@@ -50,6 +56,7 @@ async def get_data(message: types.Message, state: FSMContext) -> NoReturn:
     ping_ip = func_ping(message.text, fl="State")
     await bot_token.send_message(message.chat.id, ping_ip, parse_mode='html')
     await state.finish()
+    await cmd_start(message)
 
 
 # noinspection PyTypeChecker
@@ -57,7 +64,9 @@ async def check_open_port(message: types.Message, ) -> NoReturn:
     await dp.storage.set_data(user=message.from_user.id, data=message.text)
     if len(message.text.split(" ")) == 1:
         await CmdState.enter_pport.set()
-        await message.reply("Введите имя или ip сервера и порт")
+        await message.reply("Введите или выберите имя или ip сервера и порт \n",
+                            reply_markup=generate_value_keyboard(id_user=message.from_user.id,
+                                                                 use_command=message.text))
     if len(message.text.split(" ")) > 1:
         use_command = message.text.split(" ")
         await check_hash_table(message.from_user.id, use_command[0].replace('/', ""), " ".join(use_command[1:]))
@@ -80,6 +89,7 @@ async def get_pping_data(message: types.Message, state: FSMContext) -> NoReturn:
                                                       f'Port: {name_server[1]}\n'
                                                       f'{pping}', parse_mode='html')
         await state.finish()
+        await cmd_start(message)
 
 
 async def gen_pass(message: types.Message, ) -> NoReturn:
@@ -100,6 +110,7 @@ async def generate_pass(message: types.Message, state: FSMContext) -> NoReturn:
     generate = generator(mes[0:2])
     await bot_token.send_message(message.chat.id, generate, parse_mode='html')
     await state.finish()
+    await cmd_start(message)
 
 
 async def check_author_domain(message: types.Message) -> NoReturn:
@@ -130,7 +141,9 @@ async def check_author_domain(message: types.Message) -> NoReturn:
 
     if len(mes) == 1:
         await CmdState.enter_whois.set()
-        await message.reply("Введите имя или ip сервера")
+        await message.reply("Введите или выберите имя или ip сервера \n",
+                            reply_markup=generate_value_keyboard(id_user=message.from_user.id,
+                                                                   use_command=message.text))
 
 
 async def get_author(message: types.Message, state: FSMContext) -> NoReturn:
@@ -152,6 +165,7 @@ async def get_author(message: types.Message, state: FSMContext) -> NoReturn:
                                                       "введите /whois ip \n"
                                                       f"{err}", parse_mode='html')
     await state.finish()
+    await cmd_start(message)
 
 
 async def check_dns_name(message: types.Message) -> NoReturn:
@@ -171,7 +185,9 @@ async def check_dns_name(message: types.Message) -> NoReturn:
 
     if len(mes) == 1:
         await CmdState.enter_nslookup.set()
-        await message.reply(f'Введите имя сервера или ip')
+        await message.reply("Введите или выберите имя или ip сервера \n",
+                            reply_markup=generate_value_keyboard(id_user=message.from_user.id,
+                                                                   use_command=message.text))
 
 
 async def get_look_up(message: types.Message, state : FSMContext) -> NoReturn:
@@ -188,6 +204,7 @@ async def get_look_up(message: types.Message, state : FSMContext) -> NoReturn:
         await bot_token.send_message(message.chat.id, str(look), parse_mode='html')
 
     await state.finish()
+    await cmd_start(message)
 
 
 async def start_tracert(message: types.Message) -> NoReturn:
@@ -205,9 +222,10 @@ async def start_tracert(message: types.Message) -> NoReturn:
 
     if len(mes) == 1:
         await CmdState.enter_tracert.set()
-        await message.reply(f'Введите имя сервера или ip\n'
+        await message.reply(f'Введите или выберите имя сервера или ip\n'
                             f'и если необходимо через пробел\n'
-                            f'кол-во прыжков')
+                            f'кол-во прыжков', reply_markup=generate_value_keyboard(id_user=message.from_user.id,
+                                                                                        use_command=message.text))
 
 
 async def get_data_tracert(message: types.Message, state : FSMContext) -> NoReturn:
@@ -223,6 +241,7 @@ async def get_data_tracert(message: types.Message, state : FSMContext) -> NoRetu
     await bot_token.send_message(message.chat.id, res, parse_mode='html')
 
     await state.finish()
+    await cmd_start(message)
 
 def register_state_handlers(dp: Dispatcher) -> NoReturn:
     dp.register_message_handler(check_ping, commands=['ping'], state=None)
