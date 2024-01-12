@@ -1,4 +1,4 @@
-from aiogram import  Dispatcher, types
+from aiogram import Dispatcher, types
 from typing import NoReturn
 
 from read_config import watch_id
@@ -26,12 +26,16 @@ async def get_id(message: types.Message) -> NoReturn:
 
 
 async def cmd_start(message: types.Message) -> NoReturn:
-    button1 = types.KeyboardButton("/help")
-    button2 = types.KeyboardButton("/id")
-    button3 = types.KeyboardButton("/speedtest")
-    button4 = types.KeyboardButton("/stop")
     kb_client = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = [button1, button2, button3, button4]
+    buttons = [types.KeyboardButton("/id"),
+               types.KeyboardButton("/gen"),
+               types.KeyboardButton("/ping"),
+               types.KeyboardButton("/pport"),
+               types.KeyboardButton("/whois"),
+               types.KeyboardButton("/nslookup"),
+               types.KeyboardButton("/tracert"),
+               types.KeyboardButton("/speedtest"),
+               types.KeyboardButton("/cancel")]
     kb_client.add(*buttons)
     await message.answer("Выбирайте команду", reply_markup=kb_client)
 
